@@ -1,5 +1,6 @@
 package com.dtlinley.toomanyninjas.entities;
 
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
@@ -10,19 +11,18 @@ public abstract class Entity {
 
 	protected boolean dead = false;
 
-	private final Polygon bounds;
+	private final Polygon shape;
 
-	protected Entity(Polygon bounds) {
-		this.bounds = bounds;
+	protected Entity(Polygon shape) {
+		this.shape = shape;
 	}
 
-	public Polygon getBounds() {
-		return bounds;
+	public Polygon getShape() {
+		return shape;
 	}
 
 	public boolean collidesWith(Entity other) {
-		// TODO: implement collision checking
-		return false;
+		return Intersector.overlapConvexPolygons(getShape(), other.getShape());
 	}
 
 	public abstract void collide();
@@ -32,10 +32,10 @@ public abstract class Entity {
 	}
 
 	public Vector2 getPosition() {
-		return new Vector2(bounds.getX(), bounds.getY());
+		return new Vector2(shape.getX(), shape.getY());
 	}
 
 	public void setPosition(Vector2 position) {
-		bounds.setPosition(position.x, position.y);
+		shape.setPosition(position.x, position.y);
 	}
 }
