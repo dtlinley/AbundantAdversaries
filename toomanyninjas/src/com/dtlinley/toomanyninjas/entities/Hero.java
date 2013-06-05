@@ -1,14 +1,23 @@
 package com.dtlinley.toomanyninjas.entities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Polygon;
 
 public class Hero extends Entity {
 
-	// TODO: private Sword sword;
-	protected Hero(Polygon bounds) {
+	private Sword sword;
+	private HashMap<HeroState, Animation> textures;
+
+	protected enum HeroState {
+		LEFT, DOWN_LEFT, UP_LEFT, UP, RIGHT, DOWN_RIGHT, UP_RIGHT
+	};
+
+	public Hero(Polygon bounds) {
 		super(bounds);
+		sword = new Sword(null);
 	}
 
 	public void deflect(ArrayList<Entity> entities) {
