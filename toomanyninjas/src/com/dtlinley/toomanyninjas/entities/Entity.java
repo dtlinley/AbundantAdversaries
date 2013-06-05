@@ -3,15 +3,15 @@ package com.dtlinley.toomanyninjas.entities;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 public abstract class Entity {
 
-	public float velX = 0;
-	public float velY = 0;
+	private Vector2 vel = new Vector2();
 
 	protected boolean dead = false;
 
-	private final Polygon shape;
+	private Polygon shape;
 
 	protected Entity(Polygon shape) {
 		this.shape = shape;
@@ -35,7 +35,30 @@ public abstract class Entity {
 		return new Vector2(shape.getX(), shape.getY());
 	}
 
+	public float getRotation() {
+		return shape.getRotation();
+	}
+
 	public void setPosition(Vector2 position) {
 		shape.setPosition(position.x, position.y);
 	}
+
+	public void setPosition(Vector3 position) {
+		shape.setPosition(position.x, position.y);
+		shape.setRotation(position.z);
+	}
+
+	public Vector2 getVelocity() {
+		return vel.cpy();
+	}
+
+	public void setVelocity(Vector2 vel) {
+		this.vel = vel;
+	}
+
+	public void update(float delta) {
+		setPosition(getVelocity().mul(delta).add(getPosition()));
+	}
+
+	public abstract void render();
 }

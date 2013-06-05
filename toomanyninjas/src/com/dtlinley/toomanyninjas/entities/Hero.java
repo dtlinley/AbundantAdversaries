@@ -21,6 +21,17 @@ public class Hero extends Entity {
 
 	@Override
 	public void collide() {
+		dead = true;
+	}
+
+	@Override
+	public void update(float delta) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void render() {
 		// TODO Auto-generated method stub
 
 	}
