@@ -31,6 +31,10 @@ public abstract class Entity {
 		return dead;
 	}
 
+	public boolean shouldSwitchTeam() {
+		return false;
+	}
+
 	public Vector2 getPosition() {
 		return new Vector2(shape.getX(), shape.getY());
 	}
