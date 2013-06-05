@@ -1,3 +1,6 @@
 toomanyninjas/bin/
 toomanyninjas-android/bin/
 toomanyninjas-desktop/bin/
+*.log
+*.gwt-log
+*.class
