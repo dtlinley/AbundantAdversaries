@@ -1,9 +1,10 @@
 package com.dtlinley.toomanyninjas.entities;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
 
 public class Sword extends Entity {
 
@@ -24,10 +25,7 @@ public class Sword extends Entity {
 	}
 
 	@Override
-	public void render() {
-	}
-
-	public ArrayList<Animation> getRenderables() {
+	public LinkedHashMap<TextureRegion, Vector2> getRenderables() {
 		// TODO: fetch appropriate texture once they are loaded
 		return null;
 	}

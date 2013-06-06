@@ -1,5 +1,8 @@
 package com.dtlinley.toomanyninjas.entities;
 
+import java.util.LinkedHashMap;
+
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
@@ -64,5 +67,5 @@ public abstract class Entity {
 		setPosition(getVelocity().mul(delta).add(getPosition()));
 	}
 
-	public abstract void render();
+	public abstract LinkedHashMap<TextureRegion, Vector2> getRenderables();
 }
