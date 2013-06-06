@@ -4,3 +4,4 @@ toomanyninjas-desktop/bin/
 *.log
 *.gwt-log
 *.class
+toomanyninjas-html/.gwt/.gwt-log
