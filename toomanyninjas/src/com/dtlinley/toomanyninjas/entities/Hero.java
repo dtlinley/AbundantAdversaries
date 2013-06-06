@@ -50,6 +50,8 @@ public class Hero extends Entity {
 	}
 
 	private void setState(HeroState state) {
+		if (this.state != state)
+			stateTime = 0;
 		this.state = state;
 	}
 
