@@ -1,8 +1,12 @@
 package com.dtlinley.toomanyninjas.game;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Random;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.dtlinley.toomanyninjas.entities.Entity;
 
 /**
@@ -65,5 +69,16 @@ public class EnemyDirector {
 
 	public int getLevel() {
 		return level;
+	}
+
+	public Map<TextureRegion, Vector2> getRenderables() {
+		LinkedHashMap<TextureRegion, Vector2> textures = new LinkedHashMap<TextureRegion, Vector2>();
+		for (Entity e : enemies) {
+			textures.putAll(e.getRenderables());
+		}
+		for (Entity e : allies) {
+			textures.putAll(e.getRenderables());
+		}
+		return textures;
 	}
 }
