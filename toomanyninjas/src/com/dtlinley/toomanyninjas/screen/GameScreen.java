@@ -1,6 +1,14 @@
 package com.dtlinley.toomanyninjas.screen;
 
+import java.util.LinkedHashMap;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.dtlinley.toomanyninjas.gamestate.GameState;
 
 /**
@@ -15,16 +23,33 @@ import com.dtlinley.toomanyninjas.gamestate.GameState;
 public class GameScreen implements Screen {
 
 	private GameState state;
+	private SpriteBatch batch;
+	private OrthographicCamera camera;
 
 	public GameScreen() {
 		// this.state = new BeginState();
+		this.batch = new SpriteBatch();
+		float w = Gdx.graphics.getWidth();
+		float h = Gdx.graphics.getHeight();
+
+		camera = new OrthographicCamera(1, h / w);
 	}
 
 	@Override
 	public void render(float delta) {
 		state = state.getTargetState();
 		state.update(delta);
-		state.render(delta);
+
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT); // This cryptic line clears the screen.
+		batch.setProjectionMatrix(camera.combined);
+
+		batch.begin();
+		LinkedHashMap<TextureRegion, Vector2> textures = state.getRenderables();
+		for (TextureRegion t : textures.keySet()) {
+			Vector2 v = textures.get(t);
+			batch.draw(t, v.x, v.y);
+		}
+		batch.end();
 	}
 
 	@Override
@@ -59,8 +84,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-
+		batch.dispose();
 	}
 
 }
