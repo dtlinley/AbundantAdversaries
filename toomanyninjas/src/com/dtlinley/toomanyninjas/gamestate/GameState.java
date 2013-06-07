@@ -1,8 +1,11 @@
 package com.dtlinley.toomanyninjas.gamestate;
 
-public interface GameState {
+import java.util.LinkedHashMap;
 
-	public void render(float delta);
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+
+public interface GameState {
 
 	public void update(float delta);
 
@@ -13,5 +16,13 @@ public interface GameState {
 	 * @return
 	 */
 	public GameState getTargetState();
+
+	/**
+	 * Game States will never render their own materials. Instead, it is collected by the Screen which coordinates all drawing in
+	 * order to gain efficiency.
+	 * 
+	 * @return
+	 */
+	public LinkedHashMap<TextureRegion, Vector2> getRenderables();
 
 }
