@@ -24,6 +24,10 @@ public abstract class Entity {
 		return shape;
 	}
 
+	protected void setShape(Polygon shape) {
+		this.shape = shape;
+	}
+
 	public boolean collidesWith(Entity other) {
 		return Intersector.overlapConvexPolygons(getShape(), other.getShape());
 	}

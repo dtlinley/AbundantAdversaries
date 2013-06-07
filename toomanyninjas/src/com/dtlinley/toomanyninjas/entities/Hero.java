@@ -53,6 +53,7 @@ public class Hero extends Entity {
 		if (this.state != state)
 			stateTime = 0;
 		this.state = state;
+		setShape(shapes.get(state));
 	}
 
 	@Override
