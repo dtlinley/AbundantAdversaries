@@ -14,6 +14,7 @@ public class Hero extends Entity {
 	private Sword sword;
 	private HashMap<HeroState, Animation> textures;
 	private HashMap<HeroState, Polygon> shapes;
+	private HashMap<HeroState, Vector2> swordPositions;
 	private float stateTime;
 	private HeroState state;
 
@@ -54,6 +55,7 @@ public class Hero extends Entity {
 			stateTime = 0;
 		this.state = state;
 		setShape(shapes.get(state));
+		sword.setPosition(swordPositions.get(state));
 	}
 
 	@Override
