@@ -53,8 +53,10 @@ public class Hero extends Entity {
 	}
 
 	private void setState(HeroState state) {
-		if (this.state != state)
-			stateTime = 0;
+		if (this.state == state)
+			return;
+
+		stateTime = 0;
 		this.state = state;
 		setShape(shapes.get(state));
 		sword.setPosition(swordPositions.get(state));
