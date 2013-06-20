@@ -71,6 +71,10 @@ public class EnemyDirector {
 		return level;
 	}
 
+	public int getScore() {
+		return enemiesKilled;
+	}
+
 	public Map<TextureRegion, Vector2> getRenderables() {
 		LinkedHashMap<TextureRegion, Vector2> textures = new LinkedHashMap<TextureRegion, Vector2>();
 		for (Entity e : enemies) {

@@ -27,4 +27,12 @@ public class World {
 		textures.putAll(director.getRenderables());
 		return textures;
 	}
+
+	public int getScore() {
+		return director.getScore();
+	}
+
+	public boolean isGameOver() {
+		return hero.isDead();
+	}
 }
