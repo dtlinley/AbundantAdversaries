@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import com.dtlinley.toomanyninjas.entities.Hero.HeroState;
 
+
+
 /**
  * Mediates between an InputHandler and the HeroState which corresponds to the input reported by the InputHandler. While the IH
  * reads the input based on the appropriate signals (touch input, keyboard input, etc), the HSM will take the overall direction of
