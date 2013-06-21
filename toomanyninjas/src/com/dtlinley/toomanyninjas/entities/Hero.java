@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
@@ -19,7 +18,7 @@ public class Hero extends Entity {
 	private float stateTime;
 	private HeroState state;
 
-	protected enum HeroState {
+	public enum HeroState {
 		LEFT, DOWN_LEFT, UP_LEFT, UP, RIGHT, DOWN_RIGHT, UP_RIGHT, NEUTRAL, TRANSITION
 	};
 
@@ -75,10 +74,6 @@ public class Hero extends Entity {
 	 * keys, for instance (and the transition animation is finished) then the target state would be UP_LEFT
 	 */
 	private HeroState getStateFromInput() {
-		// if there is no input, return NEUTRAL
-		if (!Gdx.input.isTouched())
-			return HeroState.NEUTRAL;
-
 		// if the current state is TRANSITION and the stateTime is less than transitionTime, return TRANSITION
 		if ((getState() == HeroState.TRANSITION) && (stateTime < textures.get(HeroState.TRANSITION).animationDuration))
 			return HeroState.TRANSITION;
