@@ -3,6 +3,7 @@ package com.dtlinley.toomanyninjas.gamestate;
 import java.util.LinkedHashMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -49,9 +50,14 @@ public class GameOverState extends PlayState {
 
 	@Override
 	public void render() {
-		super.render();
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT); // This cryptic line clears the screen.
+
+		LinkedHashMap<TextureRegion, Vector2> textures = getRenderables();
 		batch.begin();
-		batch.draw(overlay, overlayPosition.x, overlayPosition.y);
+		for (TextureRegion t : textures.keySet()) {
+			Vector2 v = textures.get(t);
+			batch.draw(t, v.x, v.y);
+		}
 		font.draw(batch, String.valueOf(score), scorePosition.x, scorePosition.y);
 		batch.end();
 	}
