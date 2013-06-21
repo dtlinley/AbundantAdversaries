@@ -1,6 +1,12 @@
 package com.dtlinley.toomanyninjas.gamestate;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 public class PauseState extends PlayState {
+
+	public PauseState(SpriteBatch batch) {
+		super(batch);
+	}
 
 	@Override
 	public void update(float delta) {

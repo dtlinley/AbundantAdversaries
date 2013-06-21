@@ -1,15 +1,11 @@
 package com.dtlinley.toomanyninjas.screen;
 
-import java.util.LinkedHashMap;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.dtlinley.toomanyninjas.gamestate.GameState;
+import com.dtlinley.toomanyninjas.gamestate.PlayState;
 
 /**
  * Screens are used in-game to manage GameStates. This involves changing the current GameState as well as telling the GameState to
@@ -33,23 +29,15 @@ public class GameScreen implements Screen {
 		float h = Gdx.graphics.getHeight();
 
 		camera = new OrthographicCamera(1, h / w);
+		state = new PlayState(batch);
 	}
 
 	@Override
 	public void render(float delta) {
 		state = state.getTargetState();
 		state.update(delta);
-
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT); // This cryptic line clears the screen.
 		batch.setProjectionMatrix(camera.combined);
-
-		batch.begin();
-		LinkedHashMap<TextureRegion, Vector2> textures = state.getRenderables();
-		for (TextureRegion t : textures.keySet()) {
-			Vector2 v = textures.get(t);
-			batch.draw(t, v.x, v.y);
-		}
-		batch.end();
+		state.render();
 	}
 
 	@Override
