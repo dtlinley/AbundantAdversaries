@@ -24,15 +24,28 @@ public class Hero extends Entity {
 
 	public Hero(Polygon bounds) {
 		super(bounds);
+		// TODO: real sword polygon
 		sword = new Sword(null);
 	}
 
-	public void deflect(ArrayList<Entity> entities) {
-		// TODO: scan through list of entities, find those that collide with the sword, do damage to them
+	public void deflect(ArrayList<Enemy> enemies, ArrayList<Projectile> projectiles) {
+		for (Projectile p : projectiles) {
+			if (sword.collidesWith(p))
+				p.deflect();
+		}
+		for (Enemy e : enemies) {
+			if (sword.collidesWith(e))
+				e.collide();
+		}
 	}
 
 	public void checkForDeath(ArrayList<Entity> entities) {
-		// TODO: scan list of entities, find those colliding with self-- if one found, die
+		for (Entity e : entities) {
+			if (e.collidesWith(this)) {
+				collide();
+				return;
+			}
+		}
 	}
 
 	@Override
