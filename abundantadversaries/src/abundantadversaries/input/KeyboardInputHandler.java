@@ -39,4 +39,11 @@ public class KeyboardInputHandler implements InputHandler {
 		return vec.angle();
 	}
 
+	@Override
+	public boolean shouldStartGame() {
+		// TODO: gdx can't tell whether a key has been pressed since the last update, so we'll need an InputProcessor
+		// implementation that can somehow notify us when the space bar was pressed
+		return false;
+	}
+
 }

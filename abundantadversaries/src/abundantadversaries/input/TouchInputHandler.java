@@ -14,4 +14,9 @@ public class TouchInputHandler implements InputHandler {
 		return 0;
 	}
 
+	@Override
+	public boolean shouldStartGame() {
+		return Gdx.input.justTouched();
+	}
+
 }

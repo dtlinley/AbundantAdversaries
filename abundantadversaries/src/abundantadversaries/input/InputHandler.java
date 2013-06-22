@@ -21,4 +21,10 @@ public interface InputHandler {
 	 */
 	public float getInputDirection();
 
+	/**
+	 * Can be called while the game is in an OverlayState to find whether there has been input since the last update indicating
+	 * that the game should be unpaused, or that a new one should be started.
+	 */
+	public boolean shouldStartGame();
+
 }
