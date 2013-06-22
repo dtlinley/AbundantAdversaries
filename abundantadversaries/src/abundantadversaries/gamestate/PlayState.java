@@ -12,8 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class PlayState implements GameState {
 
-	private GameState target;
-
+	protected GameState target;
 	protected World world;
 	protected SpriteBatch batch;
 
@@ -27,7 +26,7 @@ public class PlayState implements GameState {
 		world.update(delta);
 
 		if (world.isGameOver()) {
-			target = new GameOverState(batch, world.getScore());
+			target = new GameOverState(this, batch, world.getScore());
 		}
 	}
 
@@ -46,7 +45,7 @@ public class PlayState implements GameState {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT); // This cryptic line clears the screen.
 
 		batch.begin();
-		LinkedHashMap<TextureRegion, Vector2> textures = world.getRenderables();
+		LinkedHashMap<TextureRegion, Vector2> textures = getRenderables();
 		for (TextureRegion t : textures.keySet()) {
 			Vector2 v = textures.get(t);
 			batch.draw(t, v.x, v.y);
