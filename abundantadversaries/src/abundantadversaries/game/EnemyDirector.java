@@ -5,7 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 
+import abundantadversaries.entities.Enemy;
 import abundantadversaries.entities.Entity;
+import abundantadversaries.entities.Mob;
+import abundantadversaries.entities.Projectile;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -19,8 +22,9 @@ import com.badlogic.gdx.math.Vector2;
  * 
  */
 public class EnemyDirector {
-	private final ArrayList<Entity> enemies = new ArrayList<Entity>();
-	private final ArrayList<Entity> allies = new ArrayList<Entity>();
+	private final ArrayList<Projectile> enemyProjectiles = new ArrayList<Projectile>();
+	private final ArrayList<Projectile> allies = new ArrayList<Projectile>();
+	private final ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private final int KILLS_PER_LEVEL = 10;
 
 	private int enemiesKilled;
@@ -45,27 +49,36 @@ public class EnemyDirector {
 		}
 
 		// clean the list of enemies, remove all that should be removed
-		ArrayList<Entity> toRemove = new ArrayList<Entity>();
-		ArrayList<Entity> newAllies = new ArrayList<Entity>();
-		for (Entity e : enemies) {
+		ArrayList<Mob> toRemove = new ArrayList<Mob>();
+		ArrayList<Projectile> newAllies = new ArrayList<Projectile>();
+		for (Projectile e : enemyProjectiles) {
 			if (e.isDead()) {
 				toRemove.add(e);
 			} else if (e.shouldSwitchTeam()) {
 				newAllies.add(e);
 			}
 		}
+		for (Enemy e : enemies) {
+			if (e.isDead())
+				toRemove.add(e);
+		}
 
+		enemyProjectiles.removeAll(toRemove);
 		enemies.removeAll(toRemove);
 		enemiesKilled += toRemove.size();
 
-		enemies.removeAll(newAllies);
+		enemyProjectiles.removeAll(newAllies);
 		allies.addAll(newAllies);
 
 		level = (int) Math.floor(enemiesKilled / (double) KILLS_PER_LEVEL);
 	}
 
-	public ArrayList<Entity> getEnemies() {
+	public ArrayList<Enemy> getEnemies() {
 		return enemies;
+	}
+
+	public ArrayList<Projectile> getEnemyProjectiles() {
+		return enemyProjectiles;
 	}
 
 	public int getLevel() {
@@ -79,6 +92,9 @@ public class EnemyDirector {
 	public Map<TextureRegion, Vector2> getRenderables() {
 		LinkedHashMap<TextureRegion, Vector2> textures = new LinkedHashMap<TextureRegion, Vector2>();
 		for (Entity e : enemies) {
+			textures.putAll(e.getRenderables());
+		}
+		for (Entity e : enemyProjectiles) {
 			textures.putAll(e.getRenderables());
 		}
 		for (Entity e : allies) {
