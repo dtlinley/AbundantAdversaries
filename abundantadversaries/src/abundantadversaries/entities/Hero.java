@@ -49,11 +49,6 @@ public class Hero extends Entity {
 	}
 
 	@Override
-	public void collide() {
-		dead = true;
-	}
-
-	@Override
 	public void update(float delta) {
 		stateTime += delta;
 		HeroState state = getStateFromInput();

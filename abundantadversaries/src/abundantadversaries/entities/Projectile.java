@@ -15,11 +15,6 @@ public abstract class Projectile extends Mob {
 	}
 
 	@Override
-	public void collide() {
-		dead = true;
-	}
-
-	@Override
 	public LinkedHashMap<TextureRegion, Vector2> getRenderables() {
 		// TODO Auto-generated method stub
 		return null;

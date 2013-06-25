@@ -32,7 +32,9 @@ public abstract class Entity {
 		return Intersector.overlapConvexPolygons(getShape(), other.getShape());
 	}
 
-	public abstract void collide();
+	public void collide() {
+		this.dead = true;
+	}
 
 	public boolean isDead() {
 		return dead;
