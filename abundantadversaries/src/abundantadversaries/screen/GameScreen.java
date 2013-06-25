@@ -2,6 +2,7 @@ package abundantadversaries.screen;
 
 import abundantadversaries.gamestate.GameState;
 import abundantadversaries.gamestate.PlayState;
+import abundantadversaries.gamestate.StartState;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -24,7 +25,7 @@ public class GameScreen implements Screen {
 	private OrthographicCamera camera;
 
 	public GameScreen() {
-		// this.state = new BeginState();
+		this.state = new StartState(new PlayState(batch), batch);
 		this.batch = new SpriteBatch();
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
