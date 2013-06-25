@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
@@ -12,9 +13,9 @@ import com.badlogic.gdx.math.Vector2;
 public class Hero extends Entity {
 
 	private Sword sword;
-	private HashMap<HeroState, Animation> textures;
-	private HashMap<HeroState, Polygon> shapes;
-	private HashMap<HeroState, Vector2> swordPositions;
+	private final HashMap<HeroState, Animation> textures;
+	private final HashMap<HeroState, Polygon> shapes;
+	private final HashMap<HeroState, Vector2> swordPositions;
 	private float stateTime;
 	private HeroState state;
 
@@ -26,6 +27,16 @@ public class Hero extends Entity {
 		super(bounds);
 		// TODO: real sword polygon
 		sword = new Sword(null);
+		textures = new HashMap<HeroState, Animation>();
+		shapes = new HashMap<HeroState, Polygon>();
+		swordPositions = new HashMap<HeroState, Vector2>();
+		Animation image = new Animation(100, new TextureRegion(new Texture("hero.png")));
+		for (HeroState s : HeroState.values()) {
+			// TODO: temporarily make all textures, shapes and swordPos' identical to avoid NPE
+			textures.put(s, image);
+			shapes.put(s, bounds);
+			swordPositions.put(s, getPosition());
+		}
 	}
 
 	public void deflect(ArrayList<Enemy> enemies, ArrayList<Projectile> projectiles) {
@@ -89,5 +100,10 @@ public class Hero extends Entity {
 		// TODO
 		// else, map the direction of input to the appropriate other state
 		return HeroState.NEUTRAL;
+	}
+
+	@Override
+	public Polygon getShape() {
+		return shapes.get(state);
 	}
 }
