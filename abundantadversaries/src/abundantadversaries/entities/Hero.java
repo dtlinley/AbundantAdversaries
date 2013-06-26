@@ -18,7 +18,6 @@ public class Hero extends Entity {
 	private final Sword sword;
 	private final HashMap<HeroState, Animation> textures;
 	private final HashMap<HeroState, Polygon> shapes;
-	private final HashMap<HeroState, Vector2> swordPositions;
 	private final HeroStateMediator stateController;
 
 	private float stateTime;
@@ -34,13 +33,11 @@ public class Hero extends Entity {
 		sword = new Sword(null);
 		textures = new HashMap<HeroState, Animation>();
 		shapes = new HashMap<HeroState, Polygon>();
-		swordPositions = new HashMap<HeroState, Vector2>();
 		Animation image = new Animation(100, new TextureRegion(new Texture("hero.png")));
 		for (HeroState s : HeroState.values()) {
-			// TODO: temporarily make all textures, shapes and swordPos' identical to avoid NPE
+			// TODO: temporarily make all textures and shapes identical to avoid NPE
 			textures.put(s, image);
 			shapes.put(s, bounds);
-			swordPositions.put(s, getPosition());
 		}
 		stateController = new HeroStateMediator(AbundantAdversaries.getInputHandler());
 	}
@@ -83,7 +80,7 @@ public class Hero extends Entity {
 		stateTime = 0;
 		this.state = state;
 		setShape(shapes.get(state));
-		sword.setPosition(swordPositions.get(state));
+		sword.setState(state);
 	}
 
 	@Override
