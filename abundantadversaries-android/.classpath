@@ -11,6 +11,6 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/david/Code/SDK/adt-bundle-linux-x86_64-20130514/sdk/platforms/android-17/android.jar"/>
+	<classpathentry kind="lib" path="libs/android.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
