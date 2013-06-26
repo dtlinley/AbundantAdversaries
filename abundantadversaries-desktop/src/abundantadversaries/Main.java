@@ -1,8 +1,10 @@
 package abundantadversaries;
 
+import abundantadversaries.game.AbundantAdversaries;
+import abundantadversaries.input.KeyboardInputHandler;
+
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import abundantadversaries.game.AbundantAdversaries;
 
 public class Main {
 	public static void main(String[] args) {
@@ -11,7 +13,7 @@ public class Main {
 		cfg.useGL20 = false;
 		cfg.width = 480;
 		cfg.height = 320;
-		
-		new LwjglApplication(new AbundantAdversaries(), cfg);
+
+		new LwjglApplication(new AbundantAdversaries(new KeyboardInputHandler()), cfg);
 	}
 }

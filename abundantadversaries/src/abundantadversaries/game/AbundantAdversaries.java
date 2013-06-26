@@ -7,8 +7,16 @@ import com.badlogic.gdx.Game;
 
 public class AbundantAdversaries extends Game {
 
-	// XXX: Static field which needs to be set by platform-specific apps or else the game will crash. Not thrilling.
-	public static InputHandler input;
+	private static InputHandler input;
+
+	// FIXME: still not thrilled with how this is handled, but at least random things can't change the IH now
+	public static InputHandler getInputHandler() {
+		return input;
+	}
+
+	public AbundantAdversaries(InputHandler ih) {
+		input = ih;
+	}
 
 	@Override
 	public void create() {

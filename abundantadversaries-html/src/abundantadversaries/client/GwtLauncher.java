@@ -1,19 +1,21 @@
 package abundantadversaries.client;
 
 import abundantadversaries.game.AbundantAdversaries;
+import abundantadversaries.input.KeyboardInputHandler;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
 
 public class GwtLauncher extends GwtApplication {
 	@Override
-	public GwtApplicationConfiguration getConfig () {
+	public GwtApplicationConfiguration getConfig() {
 		GwtApplicationConfiguration cfg = new GwtApplicationConfiguration(480, 320);
 		return cfg;
 	}
 
 	@Override
-	public ApplicationListener getApplicationListener () {
-		return new AbundantAdversaries();
+	public ApplicationListener getApplicationListener() {
+		return new AbundantAdversaries(new KeyboardInputHandler());
 	}
 }

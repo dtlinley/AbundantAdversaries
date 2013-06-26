@@ -39,7 +39,7 @@ public abstract class OverlayState extends PlayState {
 
 	@Override
 	public void update(float delta) {
-		if (AbundantAdversaries.input.shouldStartGame())
+		if (AbundantAdversaries.getInputHandler().shouldStartGame())
 			target = background;
 	}
 }

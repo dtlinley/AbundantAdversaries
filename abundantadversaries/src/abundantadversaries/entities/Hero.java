@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import abundantadversaries.game.AbundantAdversaries;
+import abundantadversaries.input.HeroStateMediator;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,10 +15,12 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Hero extends Entity {
 
-	private Sword sword;
+	private final Sword sword;
 	private final HashMap<HeroState, Animation> textures;
 	private final HashMap<HeroState, Polygon> shapes;
 	private final HashMap<HeroState, Vector2> swordPositions;
+	private final HeroStateMediator stateController;
+
 	private float stateTime;
 	private HeroState state;
 
@@ -37,6 +42,7 @@ public class Hero extends Entity {
 			shapes.put(s, bounds);
 			swordPositions.put(s, getPosition());
 		}
+		stateController = new HeroStateMediator(AbundantAdversaries.getInputHandler());
 	}
 
 	public void deflect(ArrayList<Enemy> enemies, ArrayList<Projectile> projectiles) {
@@ -62,7 +68,7 @@ public class Hero extends Entity {
 	@Override
 	public void update(float delta) {
 		stateTime += delta;
-		HeroState state = getStateFromInput();
+		HeroState state = stateController.getStateFromInput();
 		setState(state);
 	}
 
@@ -86,20 +92,6 @@ public class Hero extends Entity {
 		map.put(textures.get(getState()).getKeyFrame(stateTime), getPosition());
 		map.putAll(sword.getRenderables());
 		return map;
-	}
-
-	/**
-	 * Read the input and determine the appropriate state for the Hero to be in. If the user is holding the up and left arrow
-	 * keys, for instance (and the transition animation is finished) then the target state would be UP_LEFT
-	 */
-	private HeroState getStateFromInput() {
-		// if the current state is TRANSITION and the stateTime is less than transitionTime, return TRANSITION
-		if ((getState() == HeroState.TRANSITION) && (stateTime < textures.get(HeroState.TRANSITION).animationDuration))
-			return HeroState.TRANSITION;
-
-		// TODO
-		// else, map the direction of input to the appropriate other state
-		return HeroState.NEUTRAL;
 	}
 
 	@Override
