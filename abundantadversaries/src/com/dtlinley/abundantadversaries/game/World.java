@@ -14,13 +14,11 @@ import com.dtlinley.abundantadversaries.entities.Projectile;
 
 public class World implements Renderable {
 
-	private final float GROUND_LEVEL = -50;
+	private final float GROUND_LEVEL = -100;
 
 	private final Hero hero;
 	private final EnemyDirector director;
 	private final ArrayList<Entity> entities = new ArrayList<Entity>();
-
-	private float degree = 0;
 
 	public World() {
 		float[] points = { -32f, -32f, -32f, 32f, 32f, 32f, 32f, -32f };

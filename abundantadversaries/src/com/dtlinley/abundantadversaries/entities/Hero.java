@@ -22,7 +22,7 @@ public class Hero extends Entity {
 	private final HeroStateMediator stateController;
 
 	private float stateTime;
-	private HeroState state;
+	private HeroState state = HeroState.NEUTRAL;
 
 	public enum HeroState {
 		LEFT, DOWN_LEFT, UP_LEFT, UP, RIGHT, DOWN_RIGHT, UP_RIGHT, NEUTRAL, TRANSITION
@@ -31,9 +31,7 @@ public class Hero extends Entity {
 	public Hero(Polygon bounds) {
 		super(bounds);
 		// TODO: real sword polygon
-		float[] points = { 0f, 10f, 100f, 10f, 100f, -10f, 0f, -10f };
-		Polygon swordPolygon = new Polygon(points);
-		sword = new Sword(swordPolygon);
+		Polygon swordPolygon = new Polygon(new float[] { 0f, 10f, 100f, 10f, 100f, -10f, 0f, -10f });
 		textures = new HashMap<HeroState, Animation>();
 		shapes = new HashMap<HeroState, Polygon>();
 		TextureRegion textureRegion = new TextureRegion(new Texture(Gdx.files.internal("hero.png")));
@@ -42,11 +40,28 @@ public class Hero extends Entity {
 		Animation image = new Animation(100, textureRegion);
 		for (HeroState s : HeroState.values()) {
 			// TODO: temporarily make all textures and shapes identical to avoid NPE
-			// bounds.setOrigin(-500, 500);
 			textures.put(s, image);
 			shapes.put(s, bounds);
 		}
+
 		stateController = new HeroStateMediator(AbundantAdversaries.getInputHandler());
+
+		sword = new Sword(swordPolygon, swordPositions());
+		setState(HeroState.NEUTRAL);
+	}
+
+	private HashMap<HeroState, Vector3> swordPositions() {
+		HashMap<HeroState, Vector3> swordPositions = new HashMap<HeroState, Vector3>();
+		swordPositions.put(HeroState.TRANSITION, new Vector3(0, 0, 0));
+		swordPositions.put(HeroState.NEUTRAL, new Vector3(25, 0, -10f));
+		swordPositions.put(HeroState.DOWN_LEFT, new Vector3(-32, 0, 200f));
+		swordPositions.put(HeroState.LEFT, new Vector3(-32, 10, 180f));
+		swordPositions.put(HeroState.UP_LEFT, new Vector3(-32, 20, 150f));
+		swordPositions.put(HeroState.UP, new Vector3(0, 30, 25f));
+		swordPositions.put(HeroState.UP_RIGHT, new Vector3(32, 20, 30f));
+		swordPositions.put(HeroState.RIGHT, new Vector3(32, 10, 0f));
+		swordPositions.put(HeroState.DOWN_RIGHT, new Vector3(32, 0, -20f));
+		return swordPositions;
 	}
 
 	public void deflect(ArrayList<Enemy> enemies, ArrayList<Projectile> projectiles) {
@@ -109,15 +124,14 @@ public class Hero extends Entity {
 		for (Polygon shape : shapes.values()) {
 			shape.setPosition(position.x, position.y);
 		}
+		sword.setPosition(position);
 	}
 
 	@Override
 	public void setPosition(Vector3 position) {
 		for (Polygon shape : shapes.values()) {
-			shape.setRotation(0);
-			shape.setPosition(position.x, position.y);
 			shape.setRotation(position.z);
 		}
-		// setPosition(new Vector2(position.x, position.y));
+		setPosition(new Vector2(position.x, position.y));
 	}
 }
