@@ -4,23 +4,21 @@ import java.util.HashMap;
 
 import com.dtlinley.abundantadversaries.entities.Hero.HeroState;
 
-
-
 /**
- * Mediates between an InputHandler and the HeroState which corresponds to the input reported by the InputHandler. While the IH
- * reads the input based on the appropriate signals (touch input, keyboard input, etc), the HSM will take the overall direction of
- * the input and map it to a corresponding HeroState. The Hero will then have a HSM (initialized with an IH) which it will use to
- * automatically get the appropriate state during updating.
+ * Maps between an InputHandler and the HeroState which corresponds to the input reported by the InputHandler. While the IH reads
+ * the input based on the appropriate signals (touch input, keyboard input, etc), the ISM will take the overall direction of the
+ * input and map it to a corresponding HeroState. This does not handle any special cases or rules about Heros switching states.
+ * Its purpose is to take the user's input and convert that into a HeroState that represents what the user wants the Hero to do
  * 
  * @author david
  * 
  */
-public class HeroStateMediator {
+public class InputStateMapper {
 
 	private final InputHandler handler;
 	private final HashMap<Float, HeroState> directionStates;
 
-	public HeroStateMediator(InputHandler handler) {
+	public InputStateMapper(InputHandler handler) {
 		this.handler = handler;
 		this.directionStates = new HashMap<Float, HeroState>();
 		directionStates.put(0f, HeroState.RIGHT);

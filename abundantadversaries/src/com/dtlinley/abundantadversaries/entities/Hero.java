@@ -11,18 +11,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.dtlinley.abundantadversaries.game.AbundantAdversaries;
-import com.dtlinley.abundantadversaries.input.HeroStateMediator;
+import com.dtlinley.abundantadversaries.input.HeroStateController;
+import com.dtlinley.abundantadversaries.input.UpdateableHeroStateController;
 
 public class Hero extends Entity {
 
 	private final Sword sword;
 	private final HashMap<HeroState, Animation> textures;
 	private final HashMap<HeroState, Polygon> shapes;
-	private final HeroStateMediator stateController;
-
-	private float stateTime;
-	private HeroState state = HeroState.NEUTRAL;
+	private final UpdateableHeroStateController stateController;
 
 	public enum HeroState {
 		LEFT, DOWN_LEFT, UP_LEFT, UP, RIGHT, DOWN_RIGHT, UP_RIGHT, NEUTRAL, TRANSITION
@@ -44,10 +41,9 @@ public class Hero extends Entity {
 			shapes.put(s, bounds);
 		}
 
-		stateController = new HeroStateMediator(AbundantAdversaries.getInputHandler());
+		stateController = new UpdateableHeroStateController();
 
-		sword = new Sword(swordPolygon, swordPositions());
-		setState(HeroState.NEUTRAL);
+		sword = new Sword(swordPolygon, swordPositions(), getStateController());
 	}
 
 	private HashMap<HeroState, Vector3> swordPositions() {
@@ -62,6 +58,10 @@ public class Hero extends Entity {
 		swordPositions.put(HeroState.RIGHT, new Vector3(32, 10, 0f));
 		swordPositions.put(HeroState.DOWN_RIGHT, new Vector3(32, 0, -20f));
 		return swordPositions;
+	}
+
+	private HeroStateController getStateController() {
+		return stateController;
 	}
 
 	public void deflect(ArrayList<Enemy> enemies, ArrayList<Projectile> projectiles) {
@@ -86,37 +86,21 @@ public class Hero extends Entity {
 
 	@Override
 	public void update(float delta) {
-		stateTime += delta;
-		HeroState state = stateController.getStateFromInput();
-		setState(state);
-	}
-
-	private HeroState getState() {
-		return state;
-	}
-
-	private void setState(HeroState state) {
-		if (this.state == state)
-			return;
-
-		stateTime = 0;
-		this.state = state;
-		setShape(shapes.get(state));
-		sword.setState(state);
+		stateController.update(delta);
 	}
 
 	@Override
 	public LinkedHashMap<TextureRegion, Vector3> getRenderables() {
 		LinkedHashMap<TextureRegion, Vector3> map = new LinkedHashMap<TextureRegion, Vector3>();
 		Vector3 v = new Vector3(getPosition().x, getPosition().y, getRotation());
-		map.put(textures.get(getState()).getKeyFrame(stateTime), v);
+		map.put(textures.get(stateController.getState()).getKeyFrame(stateController.getStateTime()), v);
 		map.putAll(sword.getRenderables());
 		return map;
 	}
 
 	@Override
 	public Polygon getShape() {
-		return shapes.get(state);
+		return shapes.get(stateController.getState());
 	}
 
 	@Override
