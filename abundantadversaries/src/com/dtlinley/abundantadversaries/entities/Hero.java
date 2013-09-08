@@ -28,7 +28,8 @@ public class Hero extends Entity {
 	public Hero(Polygon bounds) {
 		super(bounds);
 		// TODO: real sword polygon
-		Polygon swordPolygon = new Polygon(new float[] { 0f, 10f, 100f, 10f, 100f, -10f, 0f, -10f });
+		Polygon swordPolygon = new Polygon(new float[] { 0f, 20f, 70f, 20f, 70f, 0f, 0f, 0f });
+		swordPolygon.setOrigin(10, 10);
 		textures = new HashMap<HeroState, Animation>();
 		shapes = new HashMap<HeroState, Polygon>();
 		TextureRegion textureRegion = new TextureRegion(new Texture(Gdx.files.internal("hero.png")));
@@ -48,15 +49,15 @@ public class Hero extends Entity {
 
 	private HashMap<HeroState, Vector3> swordPositions() {
 		HashMap<HeroState, Vector3> swordPositions = new HashMap<HeroState, Vector3>();
-		swordPositions.put(HeroState.TRANSITION, new Vector3(0, 0, 0));
-		swordPositions.put(HeroState.NEUTRAL, new Vector3(25, 0, -10f));
-		swordPositions.put(HeroState.DOWN_LEFT, new Vector3(-32, 0, 200f));
-		swordPositions.put(HeroState.LEFT, new Vector3(-32, 10, 180f));
-		swordPositions.put(HeroState.UP_LEFT, new Vector3(-32, 20, 150f));
+		swordPositions.put(HeroState.TRANSITION, new Vector3(0, 15, 0));
+		swordPositions.put(HeroState.NEUTRAL, new Vector3(25, 10, -10f));
+		swordPositions.put(HeroState.DOWN_LEFT, new Vector3(25, 25, 200f));
+		swordPositions.put(HeroState.LEFT, new Vector3(20, 30, 180f));
+		swordPositions.put(HeroState.UP_LEFT, new Vector3(20, 40, 150f));
 		swordPositions.put(HeroState.UP, new Vector3(0, 30, 25f));
-		swordPositions.put(HeroState.UP_RIGHT, new Vector3(32, 20, 30f));
-		swordPositions.put(HeroState.RIGHT, new Vector3(32, 10, 0f));
-		swordPositions.put(HeroState.DOWN_RIGHT, new Vector3(32, 0, -20f));
+		swordPositions.put(HeroState.UP_RIGHT, new Vector3(40, 30, 30f));
+		swordPositions.put(HeroState.RIGHT, new Vector3(40, 20, 0f));
+		swordPositions.put(HeroState.DOWN_RIGHT, new Vector3(40, 10, -20f));
 		return swordPositions;
 	}
 
@@ -90,10 +91,10 @@ public class Hero extends Entity {
 	}
 
 	@Override
-	public LinkedHashMap<TextureRegion, Vector3> getRenderables() {
-		LinkedHashMap<TextureRegion, Vector3> map = new LinkedHashMap<TextureRegion, Vector3>();
-		Vector3 v = new Vector3(getPosition().x, getPosition().y, getRotation());
-		map.put(textures.get(stateController.getState()).getKeyFrame(stateController.getStateTime()), v);
+	public LinkedHashMap<TextureRegion, Polygon> getRenderables() {
+		LinkedHashMap<TextureRegion, Polygon> map = new LinkedHashMap<TextureRegion, Polygon>();
+		Polygon p = getShape();
+		map.put(textures.get(stateController.getState()).getKeyFrame(stateController.getStateTime()), p);
 		map.putAll(sword.getRenderables());
 		return map;
 	}

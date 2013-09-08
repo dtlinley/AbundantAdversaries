@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Polygon;
 import com.dtlinley.abundantadversaries.entities.Enemy;
 import com.dtlinley.abundantadversaries.entities.Entity;
 import com.dtlinley.abundantadversaries.entities.Mob;
@@ -89,8 +89,8 @@ public class EnemyDirector implements Renderable {
 	}
 
 	@Override
-	public LinkedHashMap<TextureRegion, Vector3> getRenderables() {
-		LinkedHashMap<TextureRegion, Vector3> textures = new LinkedHashMap<TextureRegion, Vector3>();
+	public LinkedHashMap<TextureRegion, Polygon> getRenderables() {
+		LinkedHashMap<TextureRegion, Polygon> textures = new LinkedHashMap<TextureRegion, Polygon>();
 		for (Entity e : enemies) {
 			textures.putAll(e.getRenderables());
 		}

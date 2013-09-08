@@ -49,10 +49,10 @@ public class Sword extends Entity {
 	}
 
 	@Override
-	public LinkedHashMap<TextureRegion, Vector3> getRenderables() {
-		LinkedHashMap<TextureRegion, Vector3> map = new LinkedHashMap<TextureRegion, Vector3>();
-		Vector3 v = new Vector3(getPosition().x, getPosition().y, getRotation());
-		map.put(textures.get(stateController.getState()).getKeyFrame(stateController.getStateTime()), v);
+	public LinkedHashMap<TextureRegion, Polygon> getRenderables() {
+		LinkedHashMap<TextureRegion, Polygon> map = new LinkedHashMap<TextureRegion, Polygon>();
+		Polygon p = getShape();
+		map.put(textures.get(stateController.getState()).getKeyFrame(stateController.getStateTime()), p);
 		return map;
 	}
 
@@ -77,5 +77,14 @@ public class Sword extends Entity {
 	@Override
 	public float getRotation() {
 		return super.getRotation() + swordPositions.get(stateController.getState()).z;
+	}
+
+	@Override
+	public Polygon getShape() {
+		Polygon shape = new Polygon(super.getShape().getTransformedVertices());
+		Vector3 v = swordPositions.get(stateController.getState());
+		shape.setPosition(basePosition.x + v.x, basePosition.y + v.y);
+		shape.rotate(v.z);
+		return shape;
 	}
 }

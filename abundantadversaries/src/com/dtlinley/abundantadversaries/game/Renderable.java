@@ -3,7 +3,7 @@ package com.dtlinley.abundantadversaries.game;
 import java.util.LinkedHashMap;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Polygon;
 
 public interface Renderable {
 
@@ -13,6 +13,6 @@ public interface Renderable {
 	 * 
 	 * @return
 	 */
-	public LinkedHashMap<TextureRegion, Vector3> getRenderables();
+	public LinkedHashMap<TextureRegion, Polygon> getRenderables();
 
 }

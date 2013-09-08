@@ -13,7 +13,7 @@ import com.dtlinley.abundantadversaries.game.AbundantAdversaries;
  */
 public class HeroStateController {
 
-	protected static final float TRANSITION_TIME = 0.2f;
+	protected static final float TRANSITION_TIME = 0.1f;
 	protected final InputStateMapper stateMapper;
 
 	protected HeroState state;

@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.dtlinley.abundantadversaries.entities.Enemy;
 import com.dtlinley.abundantadversaries.entities.Entity;
 import com.dtlinley.abundantadversaries.entities.Hero;
@@ -21,8 +20,9 @@ public class World implements Renderable {
 	private final ArrayList<Entity> entities = new ArrayList<Entity>();
 
 	public World() {
-		float[] points = { -32f, -32f, -32f, 32f, 32f, 32f, 32f, -32f };
+		float[] points = { 0f, 0f, 0f, 64f, 64f, 64f, 64f, 0f };
 		Polygon heroPoly = new Polygon(points);
+		heroPoly.setOrigin(32, 32);
 		hero = new Hero(heroPoly);
 		hero.setPosition(new Vector2(-32, GROUND_LEVEL));
 		director = new EnemyDirector();
@@ -41,8 +41,8 @@ public class World implements Renderable {
 	}
 
 	@Override
-	public LinkedHashMap<TextureRegion, Vector3> getRenderables() {
-		LinkedHashMap<TextureRegion, Vector3> textures = hero.getRenderables();
+	public LinkedHashMap<TextureRegion, Polygon> getRenderables() {
+		LinkedHashMap<TextureRegion, Polygon> textures = hero.getRenderables();
 		textures.putAll(director.getRenderables());
 		return textures;
 	}

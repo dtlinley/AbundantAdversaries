@@ -6,7 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.dtlinley.abundantadversaries.game.World;
 
 public class PlayState implements GameState {
@@ -36,7 +37,7 @@ public class PlayState implements GameState {
 	}
 
 	@Override
-	public LinkedHashMap<TextureRegion, Vector3> getRenderables() {
+	public LinkedHashMap<TextureRegion, Polygon> getRenderables() {
 		return world.getRenderables();
 	}
 
@@ -45,19 +46,25 @@ public class PlayState implements GameState {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT); // This cryptic line clears the screen.
 
 		batch.begin();
-		LinkedHashMap<TextureRegion, Vector3> textures = getRenderables();
+		LinkedHashMap<TextureRegion, Polygon> textures = getRenderables();
 		for (TextureRegion t : textures.keySet()) {
-			Vector3 v = textures.get(t);
-			draw(batch, t, v.x, v.y, v.z);
+			Polygon p = textures.get(t);
+			draw(batch, t, p);
 		}
 		batch.end();
 	}
 
-	private void draw(SpriteBatch batch, TextureRegion t, float x, float y, float rotation) {
-		float w = t.getTexture().getWidth();
-		float h = t.getTexture().getHeight();
-		float origX = (w / 2f);
-		float origY = (h / 2f);
-		batch.draw(t, x, y, origX, origY, w, h, 1f, 1f, rotation);
+	private void draw(SpriteBatch batch, TextureRegion t, Polygon p) {
+		// Note: does not properly draw polygons with the bottom-left corner at a point other than (0,0)
+		Polygon localPoly = new Polygon(p.getVertices());
+		Rectangle pRect = localPoly.getBoundingRectangle();
+		float x = p.getX();
+		float y = p.getY();
+		float w = pRect.width;
+		float h = pRect.height;
+		float r = p.getRotation();
+		float origX = p.getOriginX();
+		float origY = p.getOriginY();
+		batch.draw(t, x, y, origX, origY, w, h, 1f, 1f, r);
 	}
 }

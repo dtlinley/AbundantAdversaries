@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector3;
 
 public abstract class Enemy extends Mob {
 
@@ -16,7 +15,7 @@ public abstract class Enemy extends Mob {
 	}
 
 	@Override
-	public LinkedHashMap<TextureRegion, Vector3> getRenderables() {
+	public LinkedHashMap<TextureRegion, Polygon> getRenderables() {
 		// TODO Auto-generated method stub
 		return null;
 	}

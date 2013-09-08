@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector3;
 
 public class Projectile extends Mob {
 
@@ -19,10 +18,10 @@ public class Projectile extends Mob {
 	}
 
 	@Override
-	public LinkedHashMap<TextureRegion, Vector3> getRenderables() {
-		LinkedHashMap<TextureRegion, Vector3> map = new LinkedHashMap<TextureRegion, Vector3>();
-		Vector3 v = new Vector3(getPosition().x, getPosition().y, getRotation());
-		map.put(image, v);
+	public LinkedHashMap<TextureRegion, Polygon> getRenderables() {
+		LinkedHashMap<TextureRegion, Polygon> map = new LinkedHashMap<TextureRegion, Polygon>();
+		Polygon p = getShape();
+		map.put(image, p);
 		return map;
 	}
 
