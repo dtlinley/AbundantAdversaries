@@ -26,8 +26,10 @@ public class Projectile extends Mob {
 	}
 
 	public void deflect() {
-		teamSwitch = true;
-		setVelocity(getVelocity().cpy().mul(-1));
+		if (teamSwitch == false) {
+			teamSwitch = true;
+			setVelocity(getVelocity().cpy().mul(-1));
+		}
 	}
 
 	public boolean shouldSwitchTeam() {

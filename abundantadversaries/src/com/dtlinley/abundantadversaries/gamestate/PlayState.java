@@ -55,6 +55,9 @@ public class PlayState implements GameState {
 	}
 
 	private void draw(SpriteBatch batch, TextureRegion t, Polygon p) {
+		if (t.getTexture() == null) {
+			return;
+		}
 		// Note: does not properly draw polygons with the bottom-left corner at a point other than (0,0)
 		Polygon localPoly = new Polygon(p.getVertices());
 		Rectangle pRect = localPoly.getBoundingRectangle();

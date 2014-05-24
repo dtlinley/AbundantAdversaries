@@ -36,7 +36,11 @@ public abstract class OverlayState extends PlayState {
 	@Override
 	public LinkedHashMap<TextureRegion, Polygon> getRenderables() {
 		LinkedHashMap<TextureRegion, Polygon> map = super.getRenderables();
-		Polygon v = new Polygon(new float[] { overlayPosition.x, overlayPosition.y, 0f });
+		float orgX = overlayPosition.x;
+		float orgY = overlayPosition.y;
+		float sizeX = overlaySize.x;
+		float sizeY = overlaySize.y;
+		Polygon v = new Polygon(new float[] { orgX, orgY, orgX + sizeX, orgY, orgX + sizeX, orgY + sizeY, orgX, orgY + sizeY });
 		map.put(overlay, v);
 		return map;
 	}

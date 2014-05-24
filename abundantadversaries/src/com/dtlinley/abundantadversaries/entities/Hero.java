@@ -28,7 +28,7 @@ public class Hero extends Entity {
 	public Hero(Polygon bounds) {
 		super(bounds);
 		// TODO: real sword polygon
-		Polygon swordPolygon = new Polygon(new float[] { 0f, 20f, 70f, 20f, 70f, 0f, 0f, 0f });
+		Polygon swordPolygon = new Polygon(new float[] { 0f, 20f, 70f, 20f, 70f, 0f });
 		swordPolygon.setOrigin(10, 10);
 		textures = new HashMap<HeroState, Animation>();
 		shapes = new HashMap<HeroState, Polygon>();
@@ -51,9 +51,9 @@ public class Hero extends Entity {
 		HashMap<HeroState, Vector3> swordPositions = new HashMap<HeroState, Vector3>();
 		swordPositions.put(HeroState.TRANSITION, new Vector3(0, 15, 0));
 		swordPositions.put(HeroState.NEUTRAL, new Vector3(25, 10, -10f));
-		swordPositions.put(HeroState.DOWN_LEFT, new Vector3(25, 25, 200f));
-		swordPositions.put(HeroState.LEFT, new Vector3(20, 30, 180f));
-		swordPositions.put(HeroState.UP_LEFT, new Vector3(20, 40, 150f));
+		swordPositions.put(HeroState.DOWN_LEFT, new Vector3(15, 10, 200f));
+		swordPositions.put(HeroState.LEFT, new Vector3(10, 15, 180f));
+		swordPositions.put(HeroState.UP_LEFT, new Vector3(10, 25, 150f));
 		swordPositions.put(HeroState.UP, new Vector3(0, 30, 25f));
 		swordPositions.put(HeroState.UP_RIGHT, new Vector3(40, 30, 30f));
 		swordPositions.put(HeroState.RIGHT, new Vector3(40, 20, 0f));

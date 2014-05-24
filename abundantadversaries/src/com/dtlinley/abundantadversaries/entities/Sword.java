@@ -81,10 +81,10 @@ public class Sword extends Entity {
 
 	@Override
 	public Polygon getShape() {
-		Polygon shape = new Polygon(super.getShape().getTransformedVertices());
+		Polygon shape = shapes.get(stateController.getState());
 		Vector3 v = swordPositions.get(stateController.getState());
 		shape.setPosition(basePosition.x + v.x, basePosition.y + v.y);
-		shape.rotate(v.z);
+		shape.setRotation(v.z);
 		return shape;
 	}
 }
