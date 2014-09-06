@@ -26,14 +26,14 @@ public class EnemyDirector implements Renderable {
 	private final ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private final int KILLS_PER_LEVEL = 10;
 
-	private int enemiesKilled;
+	private float score;
 	private int level;
 	private float spawnSpeed; // how many ms (on average) elapse between spawned mobs
 	private float toNextSpawn; // ms until another mob should be spawned
 	private Random r;
 
 	public EnemyDirector() {
-		enemiesKilled = 0;
+		score = 0;
 		level = 1;
 		spawnSpeed = 5f;
 		r = new Random();
@@ -66,28 +66,33 @@ public class EnemyDirector implements Renderable {
 		}
 
 		// clean the list of enemies, remove all that should be removed
+		float pointsToAdd = 0f;
 		ArrayList<Mob> toRemove = new ArrayList<Mob>();
 		ArrayList<Projectile> newAllies = new ArrayList<Projectile>();
 		for (Projectile e : enemyProjectiles) {
 			if (e.isDead()) {
 				toRemove.add(e);
+				pointsToAdd += e.getPoints();
 			} else if (e.shouldSwitchTeam()) {
 				newAllies.add(e);
+				pointsToAdd += e.getPoints();
 			}
 		}
 		for (Enemy e : enemies) {
-			if (e.isDead())
+			if (e.isDead()) {
 				toRemove.add(e);
+				pointsToAdd += e.getPoints();
+			}
 		}
 
 		enemyProjectiles.removeAll(toRemove);
 		enemies.removeAll(toRemove);
-		enemiesKilled += toRemove.size();
+		score += pointsToAdd;
 
 		enemyProjectiles.removeAll(newAllies);
 		allies.addAll(newAllies);
 
-		level = (int) Math.floor(enemiesKilled / (double) KILLS_PER_LEVEL);
+		level = (int) Math.floor(score / (double) KILLS_PER_LEVEL);
 	}
 
 	public ArrayList<Enemy> getEnemies() {
@@ -102,8 +107,8 @@ public class EnemyDirector implements Renderable {
 		return level;
 	}
 
-	public int getScore() {
-		return enemiesKilled;
+	public float getScore() {
+		return score;
 	}
 
 	@Override

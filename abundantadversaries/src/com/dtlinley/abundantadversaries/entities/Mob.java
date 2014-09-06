@@ -14,4 +14,8 @@ public abstract class Mob extends Entity {
 		super(bounds);
 	}
 
+	/*
+	 * The total number of points a particular Mob gives out for being destroyed
+	 */
+	public abstract float getPoints();
 }

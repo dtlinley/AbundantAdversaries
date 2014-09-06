@@ -36,4 +36,9 @@ public class Projectile extends Mob {
 		return teamSwitch;
 	}
 
+	@Override
+	public float getPoints() {
+		return 1;
+	}
+
 }
