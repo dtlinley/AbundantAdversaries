@@ -40,5 +40,4 @@ public class Projectile extends Mob {
 	public float getPoints() {
 		return 1;
 	}
-
 }

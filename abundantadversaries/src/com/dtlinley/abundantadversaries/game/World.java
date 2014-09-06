@@ -6,10 +6,10 @@ import java.util.LinkedHashMap;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.dtlinley.abundantadversaries.entities.Enemy;
 import com.dtlinley.abundantadversaries.entities.Entity;
 import com.dtlinley.abundantadversaries.entities.Hero;
 import com.dtlinley.abundantadversaries.entities.Projectile;
+import com.dtlinley.abundantadversaries.entities.enemies.Enemy;
 
 public class World implements Renderable {
 

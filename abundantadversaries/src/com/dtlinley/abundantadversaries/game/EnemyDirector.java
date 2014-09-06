@@ -7,10 +7,10 @@ import java.util.Random;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.dtlinley.abundantadversaries.entities.Enemy;
 import com.dtlinley.abundantadversaries.entities.Entity;
 import com.dtlinley.abundantadversaries.entities.Mob;
 import com.dtlinley.abundantadversaries.entities.Projectile;
+import com.dtlinley.abundantadversaries.entities.enemies.Enemy;
 
 /**
  * Tracks currently alive enemy and allied entities-- does not check for collision between enemies and allies (which is handled
