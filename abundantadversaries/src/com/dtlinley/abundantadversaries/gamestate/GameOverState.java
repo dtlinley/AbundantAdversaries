@@ -8,11 +8,11 @@ import com.badlogic.gdx.math.Vector2;
 
 public class GameOverState extends OverlayState {
 
-	private final int score;
+	private final float score;
 	private final Vector2 scorePosition;
 	private final BitmapFont font;
 
-	public GameOverState(PlayState background, SpriteBatch batch, int score) {
+	public GameOverState(PlayState background, SpriteBatch batch, float score) {
 		super(background, batch, new TextureRegion(), new Vector2(100, 100), new Vector2(100, 100));
 		this.score = score;
 		this.font = new BitmapFont();

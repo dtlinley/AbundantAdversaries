@@ -47,7 +47,7 @@ public class World implements Renderable {
 		return textures;
 	}
 
-	public int getScore() {
+	public float getScore() {
 		return director.getScore();
 	}
 
