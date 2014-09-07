@@ -17,14 +17,20 @@ import com.dtlinley.abundantadversaries.input.UpdateableHeroStateController;
 
 public class Hero extends Entity {
 
-	private final Sword sword;
-	private final HashMap<HeroState, Animation> textures;
-	private final HashMap<HeroState, Polygon> shapes;
-	private final UpdateableHeroStateController stateController;
-
 	public enum HeroState {
 		LEFT, DOWN_LEFT, UP_LEFT, UP, RIGHT, DOWN_RIGHT, UP_RIGHT, NEUTRAL, TRANSITION
-	};
+	}
+
+	public static Vector2 getHeroPosition() {
+		return new Vector2(0, -68);
+	}
+
+	private final Sword sword;
+	private final HashMap<HeroState, Animation> textures;
+
+	private final HashMap<HeroState, Polygon> shapes;
+
+	private final UpdateableHeroStateController stateController;
 
 	public Hero(Polygon bounds) {
 		super(bounds);
@@ -48,22 +54,13 @@ public class Hero extends Entity {
 		sword = new Sword(swordPolygon, swordPositions(), getStateController());
 	}
 
-	private HashMap<HeroState, Vector3> swordPositions() {
-		HashMap<HeroState, Vector3> swordPositions = new HashMap<HeroState, Vector3>();
-		swordPositions.put(HeroState.TRANSITION, new Vector3(0, 15, 0));
-		swordPositions.put(HeroState.NEUTRAL, new Vector3(25, 10, -10f));
-		swordPositions.put(HeroState.DOWN_LEFT, new Vector3(15, 10, 200f));
-		swordPositions.put(HeroState.LEFT, new Vector3(10, 15, 180f));
-		swordPositions.put(HeroState.UP_LEFT, new Vector3(10, 25, 150f));
-		swordPositions.put(HeroState.UP, new Vector3(0, 30, 25f));
-		swordPositions.put(HeroState.UP_RIGHT, new Vector3(40, 30, 30f));
-		swordPositions.put(HeroState.RIGHT, new Vector3(40, 20, 0f));
-		swordPositions.put(HeroState.DOWN_RIGHT, new Vector3(40, 10, -20f));
-		return swordPositions;
-	}
-
-	private HeroStateController getStateController() {
-		return stateController;
+	public void checkForDeath(ArrayList<Entity> entities) {
+		for (Entity e : entities) {
+			if (e.collidesWith(this)) {
+				collide();
+				return;
+			}
+		}
 	}
 
 	public void deflect(ArrayList<Enemy> enemies, ArrayList<Projectile> projectiles) {
@@ -75,20 +72,6 @@ public class Hero extends Entity {
 			if (sword.collidesWith(e))
 				e.collide();
 		}
-	}
-
-	public void checkForDeath(ArrayList<Entity> entities) {
-		for (Entity e : entities) {
-			if (e.collidesWith(this)) {
-				collide();
-				return;
-			}
-		}
-	}
-
-	@Override
-	public void update(float delta) {
-		stateController.update(delta);
 	}
 
 	@Override
@@ -105,6 +88,10 @@ public class Hero extends Entity {
 		return shapes.get(stateController.getState());
 	}
 
+	private HeroStateController getStateController() {
+		return stateController;
+	}
+
 	@Override
 	public void setPosition(Vector2 position) {
 		for (Polygon shape : shapes.values()) {
@@ -119,5 +106,24 @@ public class Hero extends Entity {
 			shape.setRotation(position.z);
 		}
 		setPosition(new Vector2(position.x, position.y));
+	}
+
+	private HashMap<HeroState, Vector3> swordPositions() {
+		HashMap<HeroState, Vector3> swordPositions = new HashMap<HeroState, Vector3>();
+		swordPositions.put(HeroState.TRANSITION, new Vector3(0, 15, 0));
+		swordPositions.put(HeroState.NEUTRAL, new Vector3(25, 10, -10f));
+		swordPositions.put(HeroState.DOWN_LEFT, new Vector3(15, 10, 200f));
+		swordPositions.put(HeroState.LEFT, new Vector3(10, 15, 180f));
+		swordPositions.put(HeroState.UP_LEFT, new Vector3(10, 25, 150f));
+		swordPositions.put(HeroState.UP, new Vector3(0, 30, 25f));
+		swordPositions.put(HeroState.UP_RIGHT, new Vector3(40, 30, 30f));
+		swordPositions.put(HeroState.RIGHT, new Vector3(40, 20, 0f));
+		swordPositions.put(HeroState.DOWN_RIGHT, new Vector3(40, 10, -20f));
+		return swordPositions;
+	}
+
+	@Override
+	public void update(float delta) {
+		stateController.update(delta);
 	}
 }

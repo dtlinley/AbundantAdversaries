@@ -8,8 +8,6 @@ import com.dtlinley.abundantadversaries.game.Renderable;
 
 public abstract class Entity implements Renderable {
 
-	private Vector2 vel = new Vector2();
-
 	protected boolean dead = false;
 
 	private Polygon shape;
@@ -18,24 +16,12 @@ public abstract class Entity implements Renderable {
 		this.shape = shape;
 	}
 
-	public Polygon getShape() {
-		return shape;
-	}
-
-	protected void setShape(Polygon shape) {
-		this.shape = shape;
+	public void collide() {
+		dead = true;
 	}
 
 	public boolean collidesWith(Entity other) {
 		return Intersector.overlapConvexPolygons(getShape(), other.getShape());
-	}
-
-	public void collide() {
-		this.dead = true;
-	}
-
-	public boolean isDead() {
-		return dead;
 	}
 
 	public Vector2 getPosition() {
@@ -44,6 +30,14 @@ public abstract class Entity implements Renderable {
 
 	public float getRotation() {
 		return shape.getRotation();
+	}
+
+	public Polygon getShape() {
+		return shape;
+	}
+
+	public boolean isDead() {
+		return dead;
 	}
 
 	public void setPosition(Vector2 position) {
@@ -55,15 +49,9 @@ public abstract class Entity implements Renderable {
 		setPosition(new Vector2(position.x, position.y));
 	}
 
-	public Vector2 getVelocity() {
-		return vel.cpy();
+	protected void setShape(Polygon shape) {
+		this.shape = shape;
 	}
 
-	public void setVelocity(Vector2 vel) {
-		this.vel = vel;
-	}
-
-	public void update(float delta) {
-		setPosition(getVelocity().mul(delta).add(getPosition()));
-	}
+	public abstract void update(float delta);
 }

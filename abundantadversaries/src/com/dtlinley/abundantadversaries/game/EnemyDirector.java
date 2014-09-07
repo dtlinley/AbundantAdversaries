@@ -6,7 +6,6 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector2;
 import com.dtlinley.abundantadversaries.entities.Entity;
 import com.dtlinley.abundantadversaries.entities.Mob;
 import com.dtlinley.abundantadversaries.entities.Projectile;
@@ -40,15 +39,46 @@ public class EnemyDirector implements Renderable {
 		toNextSpawn = (float) ((r.nextGaussian() * (0.2 * spawnSpeed)) + spawnSpeed);
 	}
 
+	public ArrayList<Enemy> getEnemies() {
+		return enemies;
+	}
+
+	public ArrayList<Projectile> getEnemyProjectiles() {
+		return enemyProjectiles;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	@Override
+	public LinkedHashMap<TextureRegion, Polygon> getRenderables() {
+		LinkedHashMap<TextureRegion, Polygon> textures = new LinkedHashMap<TextureRegion, Polygon>();
+		for (Entity e : enemies) {
+			textures.putAll(e.getRenderables());
+		}
+		for (Entity e : enemyProjectiles) {
+			textures.putAll(e.getRenderables());
+		}
+		for (Entity e : allies) {
+			textures.putAll(e.getRenderables());
+		}
+		return textures;
+	}
+
+	public float getScore() {
+		return score;
+	}
+
 	public void update(float delta) {
 		// update spawn timer, spawn new enemies as necessary
 		toNextSpawn -= delta;
 		if (toNextSpawn <= 0) {
 			// TODO: spawn a mob
 			for (int i = 0; i < 1; i++) {
-				Projectile bullet = new Projectile(new Polygon(new float[] { 0f, 0f, 10f, 0f, 10f, 5f, 0f, 5f }));
-				bullet.setVelocity(new Vector2(128f, 0f));
-				bullet.setPosition(new Vector2(-200, -80));
+				Polygon bulletShape = new Polygon(new float[] { 0f, 0f, 10f, 0f, 10f, 5f, 0f, 5f });
+				bulletShape.setPosition(-400, -80);
+				Projectile bullet = new Projectile(bulletShape);
 				enemyProjectiles.add(bullet);
 			}
 			toNextSpawn = (float) ((r.nextGaussian() * (0.2 * spawnSpeed)) + spawnSpeed);
@@ -93,36 +123,5 @@ public class EnemyDirector implements Renderable {
 		allies.addAll(newAllies);
 
 		level = (int) Math.floor(score / (double) KILLS_PER_LEVEL);
-	}
-
-	public ArrayList<Enemy> getEnemies() {
-		return enemies;
-	}
-
-	public ArrayList<Projectile> getEnemyProjectiles() {
-		return enemyProjectiles;
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public float getScore() {
-		return score;
-	}
-
-	@Override
-	public LinkedHashMap<TextureRegion, Polygon> getRenderables() {
-		LinkedHashMap<TextureRegion, Polygon> textures = new LinkedHashMap<TextureRegion, Polygon>();
-		for (Entity e : enemies) {
-			textures.putAll(e.getRenderables());
-		}
-		for (Entity e : enemyProjectiles) {
-			textures.putAll(e.getRenderables());
-		}
-		for (Entity e : allies) {
-			textures.putAll(e.getRenderables());
-		}
-		return textures;
 	}
 }
